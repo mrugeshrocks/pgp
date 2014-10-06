@@ -14,6 +14,10 @@ function checkPreAuth() {
 }
 
 function handleLogin() {
+    
+}
+
+$("#submitButton").on("click",function(){
     var form = $("#loginForm");    
     //disable the button so we can't resubmit while we wait
     $("#submitButton",form).attr("disabled","disabled");
@@ -21,14 +25,14 @@ function handleLogin() {
     var p = $("#password", form).val();
     console.log("click");
     if(u != '' && p!= '') {
-        $.post("http://teemper.invanos.net/retailer/index/login?method=login&returnformat=json", {username:u,password:p}, function(res) {
-            if(res == true) {
+        $.post("http://teemper.invanos.net/retailer/index/applogin?method=login&returnformat=json", {username:u,password:p}, function(res) {
+            if(res.status == 'success') {
                 //store
                 window.localStorage["username"] = u;
                 window.localStorage["password"] = p;             
                 $.mobile.changePage("categories.html");
             } else {
-                navigator.notification.alert("Your login failed", function() {});
+                navigator.notification.alert(res.message, function() {});
             }
          $("#submitButton").removeAttr("disabled");
         },"json");
@@ -38,10 +42,10 @@ function handleLogin() {
         $("#submitButton").removeAttr("disabled");
     }
     return false;
-}
+});
 
 function deviceReady() {
     
-$("#loginForm").on("submit",handleLogin);
+
 
 }
