@@ -17,7 +17,7 @@ function handleLogin() {
     
 }
 
-$("#submitButton").on("click",function(){
+$("#submitButton").on("tap",function(){
     var form = $("#loginForm");    
     //disable the button so we can't resubmit while we wait
     $("#submitButton",form).attr("disabled","disabled");
